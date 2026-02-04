@@ -6,7 +6,9 @@ import {
   Plus,
   Clock,
   ChevronDown,
-  Menu,
+  User,
+  Settings,
+  LogOut,
 } from "lucide-react";
 
 export default function DashboardLayout({
@@ -16,64 +18,71 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="min-h-screen bg-[#e0e6ef] font-sans text-[#333]">
-      {/* 1. TOP GLOBAL HEADER (Exact NetSuite Blue) */}
-      <header className="bg-[#4d6596] text-white h-16 shadow-sm z-50 relative flex flex-col justify-between">
-        {/* Top Row: Logo, Search, User */}
-        <div className="flex items-center justify-between px-4 pt-2">
+      {/* 1. TOP GLOBAL HEADER (White Background) */}
+      <header className="bg-white h-14 shadow-sm z-50 relative flex flex-col justify-center border-b border-gray-200">
+        <div className="flex items-center justify-between px-4">
           {/* Logo Area */}
-          <div className="flex items-center gap-4 w-48">
-            {/* The "Oracle" style logo */}
-            <div className="font-bold text-xl tracking-tight leading-none flex flex-col">
-              <span className="text-[10px] uppercase tracking-widest opacity-80 font-normal">
+          <div className="flex items-center gap-4 w-64">
+            <div className="font-bold text-xl tracking-tight leading-none flex flex-col justify-center">
+              <span className="text-[10px] uppercase tracking-widest text-[#555] font-semibold mb-0.5">
                 Oracle
               </span>
-              <span className="text-lg">
-                Nidhal<span className="font-light">Suite</span>
+              <span className="text-lg text-[#333]">
+                Nidhal<span className="font-light text-[#555]">Suite</span>
               </span>
             </div>
           </div>
 
-          {/* Global Search Bar (Classic Pill Shape) */}
-          <div className="flex-1 max-w-2xl flex items-center justify-center">
-            <div className="relative w-full max-w-lg">
+          {/* Global Search Bar (Classic Pill) */}
+          <div className="flex-1 max-w-xl flex items-center justify-center">
+            <div className="relative w-full">
               <input
                 type="text"
                 placeholder="Search"
-                className="w-full pl-3 pr-10 py-1.5 rounded-sm border-0 bg-white text-slate-800 text-sm focus:ring-2 focus:ring-blue-300 shadow-inner"
+                className="w-full pl-9 pr-4 py-1.5 rounded-sm border border-gray-300 bg-gray-50 text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white transition-colors shadow-inner"
               />
-              <Search className="w-4 h-4 text-slate-500 absolute right-2 top-2" />
+              <Search className="w-4 h-4 text-gray-400 absolute left-2.5 top-2" />
             </div>
           </div>
 
-          {/* Right Utilities (Create, Help, User) */}
-          <div className="flex items-center gap-4 w-48 justify-end">
-            <div className="flex items-center gap-1 cursor-pointer opacity-90 hover:opacity-100">
-              <Plus className="w-5 h-5" />
-              <ChevronDown className="w-3 h-3" />
+          {/* Right Utilities (Gray Icons) */}
+          <div className="flex items-center gap-5 w-64 justify-end">
+            <div className="flex items-center gap-1 cursor-pointer opacity-70 hover:opacity-100 transition">
+              <Plus className="w-5 h-5 text-[#555]" />
             </div>
-            <div className="flex items-center gap-1 cursor-pointer opacity-90 hover:opacity-100 border-l border-blue-400 pl-3">
-              <Clock className="w-5 h-5" />
-              <ChevronDown className="w-3 h-3" />
+            <div className="flex items-center gap-1 cursor-pointer opacity-70 hover:opacity-100 transition border-r border-gray-300 pr-4">
+              <HelpCircle className="w-5 h-5 text-[#555]" />
             </div>
-            <div className="flex flex-col items-end text-[11px] leading-tight cursor-pointer">
-              <span className="font-bold">Nidhal Ghdiri</span>
-              <span className="opacity-70">Administrator</span>
+
+            {/* User Profile Dropdown */}
+            <div className="flex flex-col items-end text-[11px] leading-tight cursor-pointer group relative">
+              <span className="font-bold text-[#333]">Nidhal Ghdiri</span>
+              <span className="text-[#666]">Administrator</span>
+
+              {/* Dropdown Indicator */}
+              <div className="absolute top-8 right-0 w-32 bg-white shadow-lg border border-gray-200 rounded-sm hidden group-hover:block z-50 py-1">
+                <div className="px-3 py-2 hover:bg-gray-100 flex items-center gap-2 text-xs">
+                  <Settings className="w-3 h-3" /> Settings
+                </div>
+                <div className="px-3 py-2 hover:bg-gray-100 flex items-center gap-2 text-xs text-red-600">
+                  <LogOut className="w-3 h-3" /> Sign Out
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* 2. NAVIGATION TABS (The Bottom Row) */}
-        <div className="bg-[#4d6596] px-2 flex items-end gap-1 text-[13px] font-bold mt-1">
-          <NavTab label="Home" active />
-          <NavTab label="Activities" />
-          <NavTab label="Transactions" />
-          <NavTab label="Lists" />
-          <NavTab label="Reports" />
-          <NavTab label="Customization" />
-          <NavTab label="Documents" />
-          <NavTab label="Setup" />
         </div>
       </header>
+
+      {/* 2. NAVIGATION TABS (Blue Background) */}
+      <div className="bg-[#4d6596] px-4 flex items-end gap-1 text-[13px] font-bold h-10 shadow-md">
+        {/* Portfolio Links mimicking NetSuite Modules */}
+        <NavTab label="Home" active />
+        <NavTab label="About Me" />
+        <NavTab label="Skills" />
+        <NavTab label="Projects" />
+        <NavTab label="Experience" />
+        <NavTab label="Contact Me" />
+      </div>
 
       {/* 3. MAIN CONTENT AREA */}
       <main className="p-3 max-w-[1600px] mx-auto">{children}</main>
@@ -81,24 +90,20 @@ export default function DashboardLayout({
   );
 }
 
-function NavTab({
-  label,
-  icon,
-  active,
-}: {
-  label: string;
-  icon?: any;
-  active?: boolean;
-}) {
+// NetSuite Tab Component
+function NavTab({ label, active }: { label: string; active?: boolean }) {
   return (
     <div
       className={`
-      flex items-center gap-2 px-4 py-2 cursor-pointer transition-colors rounded-t-sm
-      ${active ? "bg-[#e0e6ef] text-[#333] border-t-2 border-blue-600" : "text-blue-50 hover:bg-[#6b82a5]"}
+      group relative px-4 py-2 cursor-pointer rounded-t-[3px] transition-all
+      ${
+        active
+          ? "bg-[#e0e6ef] text-[#333] shadow-[0_-2px_5px_rgba(0,0,0,0.1)]"
+          : "text-blue-100 hover:bg-[#5c74a0] hover:text-white"
+      }
     `}
     >
-      {icon}
-      {label}
+      <span className="flex items-center gap-1">{label}</span>
     </div>
   );
 }
