@@ -11,6 +11,7 @@ import {
   Database,
   LayoutTemplate,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -21,8 +22,13 @@ export default function Home() {
         <Portlet title="My Profile" hidePadding>
           <div className="p-5 flex flex-col items-center text-center bg-white">
             <div className="w-24 h-24 rounded-full bg-gray-200 border-4 border-white shadow-md overflow-hidden mb-3 flex items-center justify-center text-blue-300 font-bold text-2xl relative">
-              {/* Placeholder for real image */}
-              <span>NG</span>
+              <Image
+                src="/profile.jpeg" // Just "/" points to the public folder automatically
+                alt="Nidhal Ghdiri"
+                fill // This makes the image fill the parent circle
+                className="object-cover" // This ensures the image doesn't stretch/distort
+                priority // Loads the image immediately (good for LCP)
+              />
             </div>
             <h2 className="font-bold text-lg text-[#333]">Nidhal Ghdiri</h2>
             <p className="text-xs text-blue-600 font-medium mb-4">
@@ -30,16 +36,16 @@ export default function Home() {
             </p>
             <div className="w-full text-left space-y-2 text-[11px] border-t border-gray-100 pt-3">
               <ProfileItem
-                icon={<MapPin size={20} />}
+                icon={<MapPin size={15} />}
                 text="Oman (Open to Remote)"
               />
               <ProfileItem
-                icon={<Briefcase size={20} />}
+                icon={<Briefcase size={15} />}
                 text="3+ Years Experience"
               />
-              <ProfileItem icon={<Phone size={20} />} text="+968 98590405" />
+              <ProfileItem icon={<Phone size={15} />} text="+968 98590405" />
               <ProfileItem
-                icon={<Mail size={20} />}
+                icon={<Mail size={15} />}
                 text="ghdiri.nidhal@gmail.com"
               />
             </div>
