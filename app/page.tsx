@@ -1,4 +1,5 @@
 import Portlet from "@/components/dashboard/Portlet";
+import JsonLd from "@/components/JsonLd";
 import {
   FileText,
   Settings,
@@ -24,7 +25,7 @@ export default function Home() {
             <div className="w-24 h-24 rounded-full bg-gray-200 border-4 border-white shadow-md overflow-hidden mb-3 flex items-center justify-center text-blue-300 font-bold text-2xl relative">
               <Image
                 src="/profile.jpeg" // Just "/" points to the public folder automatically
-                alt="Nidhal Ghdiri"
+                alt="Portrait of Nidhal Ghdiri"
                 fill // This makes the image fill the parent circle
                 className="object-cover" // This ensures the image doesn't stretch/distort
                 priority // Loads the image immediately (good for LCP)
@@ -189,6 +190,7 @@ export default function Home() {
           </div>
         </Portlet>
       </div>
+      <JsonLd />
     </div>
   );
 }

@@ -3,27 +3,39 @@ import { Inter } from "next/font/google"; // Using Inter as standard font
 import "./globals.css";
 import { Search, HelpCircle, Bell, Plus, Settings, LogOut } from "lucide-react";
 import Link from "next/link";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 // Load Font
 const inter = Inter({ subsets: ["latin"] });
 
 // 1. SEO CONFIGURATION
 export const metadata: Metadata = {
-  title: "Nidhal Ghdiri | NetSuite Administrator & Developer",
+  metadataBase: new URL("https://nidhalghdiri.com"),
+  title: {
+    default: "Nidhal Ghdiri | NetSuite Administrator & Full Stack Developer",
+    template: "%s | Nidhal Ghdiri", // Child pages can use "Project Name | Nidhal Ghdiri"
+  },
   description:
-    "Portfolio of Nidhal Ghdiri, a NetSuite Developer specializing in SuiteScript 2.1, Next.js Integrations, and Custom ERP Solutions.",
+    "Portfolio of Nidhal Ghdiri, a NetSuite Administrator and SaaS Developer based in Oman. Specializing in ERP solutions and modern web development.",
   keywords: [
-    "NetSuite Developer",
-    "SuiteScript",
-    "NetSuite Admin",
+    "NetSuite",
+    "Oman",
+    "SaaS",
+    "Full Stack Developer",
     "Next.js",
-    "Remote Developer",
+    "React",
   ],
   openGraph: {
-    title: "Nidhal Ghdiri - NetSuite Expert",
-    description:
-      "Building modern integrations and custom modules for NetSuite.",
+    title: "Nidhal Ghdiri - Portfolio",
+    description: "NetSuite Administrator & Developer based in Oman.",
+    url: "https://nidhalghdiri.com",
+    siteName: "Nidhal Ghdiri",
+    locale: "en_US",
     type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -122,6 +134,7 @@ export default function RootLayout({
           {/* MAIN CONTENT */}
           <main className="p-4 max-w-[1600px] mx-auto">{children}</main>
         </div>
+        <GoogleAnalytics gaId="G-B3P12XQHKH" />
       </body>
     </html>
   );
