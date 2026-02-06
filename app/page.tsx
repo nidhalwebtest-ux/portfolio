@@ -1,16 +1,17 @@
 import Portlet from "@/components/dashboard/Portlet";
 import JsonLd from "@/components/JsonLd";
+import { projects, skills, education, languages } from "@/app/data"; // Import data
+import Link from "next/link";
 import {
-  FileText,
-  Settings,
   Briefcase,
   Mail,
   MapPin,
   Phone,
   ExternalLink,
-  Code2,
-  Database,
-  LayoutTemplate,
+  Settings,
+  GraduationCap,
+  Languages,
+  Calendar,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -19,16 +20,16 @@ export default function Home() {
     <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-start">
       {/* --- LEFT COLUMN (3 Cols) --- */}
       <div className="md:col-span-3 flex flex-col gap-4">
-        {/* 1. PROFILE */}
+        {/* 1. PROFILE PORTLET */}
         <Portlet title="My Profile" hidePadding>
           <div className="p-5 flex flex-col items-center text-center bg-white">
-            <div className="w-24 h-24 rounded-full bg-gray-200 border-4 border-white shadow-md overflow-hidden mb-3 flex items-center justify-center text-blue-300 font-bold text-2xl relative">
+            <div className="w-24 h-24 rounded-full bg-gray-200 border-4 border-white shadow-md overflow-hidden mb-3 flex items-center justify-center relative">
               <Image
-                src="/profile.jpeg" // Just "/" points to the public folder automatically
+                src="/profile.jpeg"
                 alt="Portrait of Nidhal Ghdiri"
-                fill // This makes the image fill the parent circle
-                className="object-cover" // This ensures the image doesn't stretch/distort
-                priority // Loads the image immediately (good for LCP)
+                fill
+                className="object-cover"
+                priority
               />
             </div>
             <h2 className="font-bold text-lg text-[#333]">Nidhal Ghdiri</h2>
@@ -37,57 +38,78 @@ export default function Home() {
             </p>
             <div className="w-full text-left space-y-2 text-[11px] border-t border-gray-100 pt-3">
               <ProfileItem
-                icon={<MapPin size={15} />}
+                icon={<MapPin size={14} />}
                 text="Oman (Open to Remote)"
               />
               <ProfileItem
-                icon={<Briefcase size={15} />}
+                icon={<Briefcase size={14} />}
                 text="3+ Years Experience"
               />
-              <ProfileItem icon={<Phone size={15} />} text="+968 98590405" />
+              <ProfileItem icon={<Phone size={14} />} text="+968 98590405" />
               <ProfileItem
-                icon={<Mail size={15} />}
+                icon={<Mail size={14} />}
                 text="ghdiri.nidhal@gmail.com"
               />
             </div>
           </div>
           <div className="bg-gray-50 border-t border-gray-200 p-2 flex justify-center">
-            <button className="text-[11px] font-bold text-blue-600 hover:underline flex items-center gap-1">
+            <Link
+              href="https://linkedin.com/in/nidhal-ghdiri"
+              target="_blank"
+              className="text-[11px] font-bold text-blue-600 hover:underline flex items-center gap-1"
+            >
               <ExternalLink className="w-3 h-3" /> View LinkedIn
-            </button>
+            </Link>
           </div>
         </Portlet>
 
-        {/* 2. SKILLS (Graphic Animation) */}
+        {/* 2. SKILLS GRAPH (Dynamic Data) */}
         <Portlet title="Technical Skills Graph">
           <div className="space-y-4 pt-1">
-            <SkillBar
-              label="SuiteScript 2.1"
-              percent="95%"
-              color="bg-blue-600"
-            />
-            <SkillBar
-              label="Next.js / React"
-              percent="85%"
-              color="bg-indigo-500"
-            />
-            <SkillBar
-              label="REST / APIs"
-              percent="90%"
-              color="bg-emerald-500"
-            />
-            <SkillBar
-              label="SQL / Database"
-              percent="80%"
-              color="bg-amber-500"
-            />
+            {skills.map((skill, index) => (
+              <SkillBar
+                key={index}
+                label={skill.name}
+                percent={skill.level}
+                // Auto-assign colors based on index for variety
+                color={
+                  index % 4 === 0
+                    ? "bg-blue-600"
+                    : index % 4 === 1
+                      ? "bg-indigo-500"
+                      : index % 4 === 2
+                        ? "bg-emerald-500"
+                        : "bg-amber-500"
+                }
+              />
+            ))}
+          </div>
+        </Portlet>
+
+        {/* 3. LANGUAGES (New Graph Portlet) */}
+        <Portlet title="Languages">
+          <div className="space-y-3">
+            {languages.map((lang, index) => (
+              <div key={index} className="flex flex-col gap-1">
+                <div className="flex justify-between text-[11px]">
+                  <span className="font-bold text-[#444]">{lang.name}</span>
+                  <span className="text-[#666]">{lang.level}</span>
+                </div>
+                <div className="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+                  <div
+                    className="bg-[#607799] h-1.5 rounded-full"
+                    style={{ width: lang.percent }}
+                  ></div>
+                </div>
+              </div>
+            ))}
           </div>
         </Portlet>
       </div>
 
       {/* --- RIGHT COLUMN (9 Cols) --- */}
       <div className="md:col-span-9 flex flex-col gap-4">
-        {/* 3. BIO (Release Preview) */}
+        {/* 4. BIO (Release Preview) */}
         <div className="bg-white border border-[#b4b9c5] rounded-[3px] shadow-sm overflow-hidden">
           <div className="bg-[#254061] px-4 py-2 flex items-center justify-between text-white">
             <h3 className="font-bold text-[13px] tracking-wide">
@@ -119,7 +141,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* 4. PROJECTS LIST */}
+        {/* 5. PROJECTS LIST (Dynamic from Data) */}
         <Portlet title="Experience & Projects" hidePadding>
           <div className="overflow-x-auto">
             <table className="w-full text-left text-[11px] border-collapse">
@@ -137,34 +159,60 @@ export default function Home() {
                   <th className="py-2 px-3 border-r border-[#e0e0e0]">
                     Tech Stack
                   </th>
-                  <th className="py-2 px-3">Business Impact</th>
+                  <th className="py-2 px-3">Business Impact / Memo</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#eee]">
-                <ProjectRow
-                  role="Global Trading (Oman)"
-                  project="WhatsApp Integration"
-                  stack="SuiteScript 2.1, RESTlet, Node.js"
-                  impact="Automated 100% of customer notifications"
-                />
-                <ProjectRow
-                  role="Global Trading (Oman)"
-                  project="Fixed Assets Module"
-                  stack="Map/Reduce, Custom Records"
-                  impact="Replaced legacy Excel tracking system"
-                />
-                <ProjectRow
-                  role="Freelance Project"
-                  project="Property Mgmt SaaS"
-                  stack="Next.js 14, NetSuite API"
-                  impact="Real-time booking portal for tenants"
-                />
+                {projects.map((p) => (
+                  <ProjectRow
+                    key={p.id}
+                    id={p.id}
+                    role={p.custEntity}
+                    project={p.title}
+                    stack={p.techStack.join(", ")} // Convert array to string
+                    impact={p.memo}
+                  />
+                ))}
               </tbody>
             </table>
           </div>
+          <div className="p-2 bg-[#f0f0f0] border-t border-[#ccc] flex justify-between text-[10px] text-gray-500">
+            <span>Total Records: {projects.length}</span>
+            <Link href="/projects" className="text-blue-600 hover:underline">
+              View All
+            </Link>
+          </div>
         </Portlet>
 
-        {/* 5. BLOG / ARTICLES (Knowledge Base) */}
+        {/* 6. EDUCATION (New Timeline Portlet) */}
+        <Portlet title="Education Timeline">
+          <div className="relative pl-4 space-y-6 before:absolute before:left-[19px] before:top-2 before:bottom-2 before:w-[2px] before:bg-gray-200">
+            {education.map((edu, index) => (
+              <div key={index} className="relative pl-6">
+                {/* Timeline Dot */}
+                <div className="absolute left-0 top-1 w-2.5 h-2.5 bg-blue-600 rounded-full border-2 border-white ring-1 ring-gray-200"></div>
+
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+                  <div>
+                    <h4 className="font-bold text-[13px] text-[#333]">
+                      {edu.degree}
+                    </h4>
+                    <div className="text-[11px] text-blue-600 font-medium mt-0.5 flex items-center gap-1">
+                      <GraduationCap size={12} />
+                      {edu.school}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 text-[10px] text-gray-500 font-medium bg-gray-50 px-2 py-1 rounded border border-gray-100 mt-1 sm:mt-0">
+                    <Calendar size={10} />
+                    {edu.year}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Portlet>
+
+        {/* 7. BLOG / ARTICLES */}
         <Portlet title="Knowledge Base (Blog)" hidePadding>
           <div className="divide-y divide-gray-100">
             <BlogRow
@@ -177,16 +225,6 @@ export default function Home() {
               title="Fixing 'RCRD_HAS_BEEN_CHANGED' error in Map/Reduce scripts"
               date="Jan 28, 2026"
             />
-            <BlogRow
-              category="Guide"
-              title="Connecting Next.js to NetSuite using Token Based Auth (TBA)"
-              date="Jan 15, 2026"
-            />
-          </div>
-          <div className="p-2 bg-gray-50 text-center border-t border-gray-200">
-            <button className="text-[11px] font-bold text-blue-600 hover:underline">
-              View All 12 Articles
-            </button>
           </div>
         </Portlet>
       </div>
@@ -200,7 +238,7 @@ export default function Home() {
 function ProfileItem({ icon, text }: { icon: any; text: string }) {
   return (
     <div className="flex items-center gap-2 text-gray-600">
-      <div className="w-3.5 h-3.5 text-gray-400">{icon}</div>
+      <div className="text-gray-400">{icon}</div>
       <span className="truncate">{text}</span>
     </div>
   );
@@ -224,7 +262,6 @@ function SkillBar({
         <span className="text-[10px] font-bold text-gray-500">{percent}</span>
       </div>
       <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-        {/* The width style here animates the bar */}
         <div
           className={`${color} h-2 rounded-full transition-all duration-1000 ease-out`}
           style={{ width: percent }}
@@ -234,17 +271,17 @@ function SkillBar({
   );
 }
 
-function ProjectRow({ role, project, stack, impact }: any) {
+function ProjectRow({ id, role, project, stack, impact }: any) {
   return (
     <tr className="hover:bg-[#eefaee] group cursor-pointer transition-colors bg-white">
       <td className="py-2 px-3 border-r border-[#eee] text-blue-600 font-medium text-[10px]">
-        View
+        <Link href={`/projects/${id}`}>View</Link>
       </td>
       <td className="py-2 px-3 border-r border-[#eee] font-medium text-[#333]">
         {role}
       </td>
       <td className="py-2 px-3 border-r border-[#eee] text-blue-700 hover:underline font-medium">
-        {project}
+        <Link href={`/projects/${id}`}>{project}</Link>
       </td>
       <td className="py-2 px-3 border-r border-[#eee] text-[#555]">{stack}</td>
       <td className="py-2 px-3 text-[#444]">{impact}</td>
