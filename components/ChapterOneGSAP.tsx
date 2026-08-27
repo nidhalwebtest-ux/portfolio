@@ -35,15 +35,15 @@ const stepsData = [
   },
   {
     title: "300+ Issues Solved",
-    icon: CheckCircle,
-    content: "Debugging complex business workflows, optimizing scripts, and saving hundreds of operational hours.",
-    action: "Explore Details",
+    image: "/solve-problem.png",
+    content: "Standard ERPs are rarely perfectly adapted to unique business processes out of the box. I specialize in taking complex business challenges, designing tailored solutions, and translating them into native NetSuite logic.\nBy developing new features, automating manual bottlenecks, and implementing custom workflows, I've successfully reclaimed hundreds of hours of manual work, making users' daily operations dramatically easier and more efficient.",
+    action: "Show some Problems solved",
   },
   {
     title: "120+ Scripts",
-    icon: Code,
-    content: "Writing highly efficient SuiteScript 1.0 & 2.0 (Client, User Event, Map/Reduce) to automate manual bottlenecks.",
-    action: "Explore Details",
+    image: "/scripts.png",
+    content: "• Client & User Event: Triggering extra actions and validating conditions before a process completes.\n• Suitelets: Building highly flexible custom forms and beautiful, consolidated reports that merge multiple standard data sources.\n• Scheduled Scripts: Reliably automating recurring system actions in the background.\n• Map/Reduce: The ultimate automation engine—processing logic across thousands of records simultaneously.",
+    action: "Explore Scripts",
   },
   {
     title: "5 Custom Modules",
